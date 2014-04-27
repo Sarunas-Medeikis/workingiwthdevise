@@ -1,0 +1,32 @@
+<p><%= notice %></p>
+
+
+<h1><%= @article.title %></h1>
+<p class="meta">
+  Posted by: <%= @article.user.email %> On <%= @article.created_at %>
+</p>
+<div>
+  <%= @article.body %>
+</div>
+
+
+
+<% if user_signed_in? && @article.user == current_user %>
+<%= link_to 'Edit', edit_article_path(@article) %>
+<% end %>
+
+
+<h2>Comments</h2>
+
+   <%=  @article.comments.each do |comment| %>
+      <strong><%= comment.body %></strong> <br />
+      <hr />
+<% end %>
+
+<%= form_tag :action => "comment", :id => @article %>
+   <%= text_area "comment", "body" %><br />
+   <%= submit_tag "Comment" %>
+</form>
+
+<%= link_to 'Back', articles_path %>
+
